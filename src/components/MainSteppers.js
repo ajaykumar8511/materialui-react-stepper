@@ -25,8 +25,6 @@ import {
 import {
 	useForm,
 	FormProvider,
-	// Controller,
-	// useFormContext,
 } from "react-hook-form";
 
 import RoomServiceIcon from '@material-ui/icons/RoomService';
@@ -173,8 +171,8 @@ export default function MainSteppers() {
 	const [activeStep, setActiveStep] = React.useState(0);
 	const [selectedDishItems, setSelectedDishItems] = React.useState(dishesJson.dishes);
 	const [dish, setDish] = React.useState('');
-	const [qty, setQty] = React.useState(0);
-	// const [dishes, setDishes] = React.useState(dishesJson.dishes);
+	const [qty, setQty] = React.useState(1);
+	const [orderItems, setOrderItems] = React.useState([]);
 
 	const methods = useForm({
 		defaultValues: {
@@ -204,7 +202,6 @@ export default function MainSteppers() {
 				let availableRestaurantTmp = []
 
 				for (let item2 in updatedMealDishes) {
-					// console.log('item::>', updatedMealDishes[item2]);
 					if (!availableRestaurantTmp.includes(updatedMealDishes[item2].restaurant)) {
 						availableRestaurantTmp.push(updatedMealDishes[item2].restaurant);
 					}
@@ -212,24 +209,30 @@ export default function MainSteppers() {
 
 				console.log('availableRestaurantTmp ::>', availableRestaurantTmp);
 				setAvailableRestaurant(availableRestaurantTmp);
-
+				setActiveStep((prevActiveStep) => prevActiveStep + 1);
 				break;
 			case 1:
 				const updatedRestaurantDishes = selectedDishItems.filter((item) => {
 					return item.restaurant === selectedRestaurant;
 				});
 				setSelectedDishItems(updatedRestaurantDishes);
+				setActiveStep((prevActiveStep) => prevActiveStep + 1);
 				break;
 			case 2:
+				if (orderItems.length) {
+					setActiveStep((prevActiveStep) => prevActiveStep + 1);
+				} else {
+					alert('Please Fill at least One Item')
+				}
+				break;
 			case 3:
 			default:
 		}
 
-		setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
 	};
 
 	const handleBack = () => {
-		// setActiveStep(activeStep - 1);
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
 	};
 
@@ -253,8 +256,11 @@ export default function MainSteppers() {
 					setSelectedRestaurant={setSelectedRestaurant}
 				/>;
 			case 2:
+
 				return <StepThreeForm
 					selectedDishItems={selectedDishItems || []}
+					orderItems={orderItems || []}
+					setOrderItems={setOrderItems}
 					dish={dish}
 					setDish={setDish}
 					qty={qty}
@@ -267,6 +273,7 @@ export default function MainSteppers() {
 					selectedRestaurant={selectedRestaurant}
 					dish={dish}
 					qty={qty}
+					orderItems={orderItems || []}
 				/>;
 			default:
 				return 'Unknown step';
@@ -280,7 +287,6 @@ export default function MainSteppers() {
 				<Grid item xs>
 				</Grid>
 				<Grid item xs={10}>
-
 					<Card className={classes.root}>
 						<CardContent>
 							<Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
@@ -304,7 +310,7 @@ export default function MainSteppers() {
 										{activeStep === steps.length ? (
 											<div>
 												<Typography className={classes.instructions} variant="h5" component="h2">
-													Thanks - you&apos;re Registered
+													Thanks - you&apos;re order registered !
 												</Typography>
 												{/* <Button onClick={handleReset} className={classes.button}>
 													Book More

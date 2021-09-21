@@ -7,8 +7,6 @@ import {
 import {
 	Controller,
 	useFormContext,
-	// useForm,
-	// FormProvider,
 } from "react-hook-form";
 
 const StepOneForm = (props) => {
@@ -40,10 +38,6 @@ const StepOneForm = (props) => {
 		},
 
 	];
-
-	// const handleChange = (event) => {
-	// 	setCurrency(event.target.value);
-	// };
 
 	return (
 		<>

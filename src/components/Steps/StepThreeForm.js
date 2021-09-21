@@ -1,6 +1,7 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
 	Button,
@@ -21,31 +22,59 @@ import {
 import {
 	Controller,
 	useFormContext,
-	// useForm,
-	// FormProvider,
 } from "react-hook-form";
 
 import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const StepThreeForm = (props) => {
 	const { control } = useFormContext();
-	// const [dish, setDish] = React.useState('');
-	// const [qty, setQty] = React.useState(0);
-	const { selectedDishItems, dish, setDish, qty, setQty } = props;
+	const [dishIds, setDishIds] = useState([]);
+	const { selectedDishItems, dish, setDish, qty, setQty, orderItems, setOrderItems } = props;
 
 	const handleChange = (event) => {
 		setDish(event.target.value);
 		console.log('dish ::>', dish);
 	};
 
-	const getValue = (event) => {
-		// setQty(event.target.value);
-		console.log('qty ::>', qty);
-	};
-	const addDishBtnFn = () => {
-		console.log('addDishBtnFn function of Add Dish is called',);
-	};
+	// const addDishBtnFn = () => {
+	// 	console.log('addDishBtnFn function of Add Dish is called',);
+	// };
 
+	const addOrderItem = () => {
+		const selectedItem = selectedDishItems.filter((item) => {
+			return item.id === dish;
+		});
+		const Index = orderItems.findIndex((item) => {
+			return item.id === selectedItem[0].id;
+		});
+
+		if (Index !== -1) {
+			let tempArray = [...orderItems];
+			console.log('Index ::>',Index)
+
+			if(tempArray.length){
+				console.log('tempArray ::>',tempArray)
+				tempArray[Index].dishQty = tempArray[Index].dishQty + qty;
+				setOrderItems([...tempArray])
+			}
+
+		}
+		else {
+			setOrderItems([...orderItems, { id: selectedItem[0].id, dishName: selectedItem[0].name, dishQty: qty }])
+		}
+		
+	};
+	const deleteOrderItem = (id) => {
+		// console.log('addDishBtnFn function of Add Dish is called',);
+		const availableOrderItems = orderItems.filter((item) => {
+			return item.id !== id;
+		});
+
+		setOrderItems([...availableOrderItems]);
+
+
+	};
 
 	return (
 		<>
@@ -57,17 +86,32 @@ const StepThreeForm = (props) => {
 								<TableRow>
 									<TableCell>Dish</TableCell>
 									<TableCell align="right">Quantity</TableCell>
+									<TableCell align="center">Action</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								<TableRow>
-									<TableCell component="th" scope="row">
-										{dish}
-									</TableCell>
-									<TableCell align="right">
-										{qty}
-									</TableCell>
-								</TableRow>
+								{orderItems.map((item) => {
+
+									return (
+										<TableRow key={item.id}>
+											<TableCell component="th" scope="row">
+												{item.dishName}
+											</TableCell>
+											<TableCell align="right">
+												{item.dishQty}
+											</TableCell>
+											<TableCell align="right">
+												<Button
+													variant="outlined"
+													startIcon={<DeleteIcon />}
+													onClick={() => deleteOrderItem(item.id)}
+												>
+													Delete
+												</Button>
+											</TableCell>
+										</TableRow>
+									);
+								})}
 							</TableBody>
 						</Table>
 					</TableContainer>
@@ -89,11 +133,15 @@ const StepThreeForm = (props) => {
 						required='required'
 						style={{ minWidth: 330 }}
 					>
-						{selectedDishItems.map((option) => (
-							<MenuItem key={option.id} value={option.name}>
-								{option.name}
-							</MenuItem>
-						))}
+						{selectedDishItems.map((option) => {
+
+							return (
+								<MenuItem key={option.id} value={option.id}>
+									{option.name}
+								</MenuItem>
+							)
+
+						})}
 					</TextField>
 				)}
 			/>
@@ -108,9 +156,8 @@ const StepThreeForm = (props) => {
 						{...field}
 						size="small"
 						aria-label="Dish Quantity"
-						onClick={getValue()}
 					>
-						<Button id="IncreaseQtyBtn" onClick={() => (qty !== 0) ? setQty(qty - 1) : null}>-</Button>
+						<Button id="IncreaseQtyBtn" onClick={() => (qty !== 1) ? setQty(qty - 1) : null}>-</Button>
 						<Button id="DisplayQtyBtn">{qty}</Button>
 						<Button id="DecreaseQtyBtn" onClick={() => setQty(qty + 1)}>+</Button>
 					</ButtonGroup>
@@ -127,7 +174,7 @@ const StepThreeForm = (props) => {
 						variant="outlined"
 						style={{ marginLeft: 90 }}
 						startIcon={<AddIcon />}
-						onClick={() => addDishBtnFn()}
+						onClick={() => addOrderItem()}
 					>
 						Add Dish
 					</Button>

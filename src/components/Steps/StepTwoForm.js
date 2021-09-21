@@ -8,8 +8,6 @@ import {
 import {
 	Controller,
 	useFormContext,
-	// useForm,
-	// FormProvider,
 } from "react-hook-form";
 
 const StepTwoForm = (props) => {
@@ -36,10 +34,6 @@ const StepTwoForm = (props) => {
 						value={selectedRestaurant}
 						onChange={handleChange}
 						required='required'
-						// 	onChange={(e) => {
-						// 		field.onChange(e);
-						// 		handleChange(e);
-						//    }}
 						variant="outlined"
 						style={{ minWidth: 330, marginBottom: 20, marginTop: 30 }}
 					>
