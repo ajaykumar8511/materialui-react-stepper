@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import {
 	TextField,
@@ -15,12 +16,13 @@ const StepOneForm = (props) => {
 	const { selectedMeal, selectedPeople, setSelectedPeople, setSelectedMeal } = props;
 
 	const mealHandleChange = (event) => {
-		console.log('mealHandleChange function');
-		// setSelectedMeal(event.target.value);
+		setSelectedMeal(event.target.value);
+		console.log('selectedMeal ::>', selectedMeal);
 	}
 
 	const peopleHandleChange = (event) => {
 		setSelectedPeople(event.target.value);
+		console.log('selectedPeople ::>', selectedPeople);
 	}
 
 	const meals = [
@@ -51,13 +53,15 @@ const StepOneForm = (props) => {
 				render={({ field }) => (
 					<TextField
 						select
+						{...field}
 						id="outlined-select-meal"
 						label="Please select your meal"
+						// onChange={([e]) => { console.log(e); }}
+						onChange={mealHandleChange}
 						value={selectedMeal}
-						onSelect={()=> mealHandleChange()}
 						variant="outlined"
+						required='required'
 						style={{ minWidth: 330, marginBottom: 20, marginTop: 20 }}
-						{...field}
 					>
 						{meals.map((option) => (
 							<MenuItem key={option.value} value={option.value}>
@@ -75,14 +79,15 @@ const StepOneForm = (props) => {
 				name="people"
 				render={({ field }) => (
 					<TextField
+						{...field}
 						id="outlined-select-people"
 						select
 						label="How many Guests?"
-						value={selectedPeople}
+						required='required'
 						onChange={peopleHandleChange}
+						value={selectedPeople}
 						variant="outlined"
 						style={{ minWidth: 330 }}
-						{...field}
 					>
 						<MenuItem value={"1"}>1</MenuItem>
 						<MenuItem value={"2"}>2</MenuItem>

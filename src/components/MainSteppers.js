@@ -1,8 +1,15 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable no-undef */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+
+import StepOneForm from './Steps/StepOneForm.js';
+import StepTwoForm from './Steps/StepTwoForm.js';
+import StepThreeForm from './Steps/StepThreeForm.js';
+import ReviewForm from './Steps/ReviewForm.js';
+
 import {
 	Stepper,
 	Step,
@@ -28,10 +35,6 @@ import ReceiptIcon from '@material-ui/icons/Receipt';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
 
-import StepOneForm from './Steps/StepOneForm.js';
-import StepTwoForm from './Steps/StepTwoForm.js';
-import StepThreeForm from './Steps/StepThreeForm.js';
-import ReviewForm from './Steps/ReviewForm.js';
 
 const dishesJson = require('../dishes.json');
 
@@ -123,17 +126,23 @@ ColorlibStepIcon.propTypes = {
 const useStyles = makeStyles((theme) => ({
 	root: {
 		width: '100%',
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center'
 	},
 
-	buttonContainer: {
+	formContainer: {
 		display: 'flex',
 		justifyContent: 'center',
+	},
+	buttonContainer: {
+		display: 'flex',
+		justifyContent: 'space-between'
 	},
 	button: {
 		marginRight: theme.spacing(1),
 	},
 	nxtButton: {
-		marginLeft: theme.spacing(25),
 		backgroundImage: 'linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%)',
 	},
 	backButton: {
@@ -159,11 +168,13 @@ export default function MainSteppers() {
 
 	const [selectedMeal, setSelectedMeal] = React.useState('');
 	const [selectedPeople, setSelectedPeople] = React.useState('');
-	// const [dishes, setDishes] = React.useState(dishesJson.dishes);
 	const [availableRestaurant, setAvailableRestaurant] = React.useState([]);
 	const [selectedRestaurant, setSelectedRestaurant] = React.useState('');
 	const [activeStep, setActiveStep] = React.useState(0);
 	const [selectedDishItems, setSelectedDishItems] = React.useState(dishesJson.dishes);
+	const [dish, setDish] = React.useState('');
+	const [qty, setQty] = React.useState(0);
+	// const [dishes, setDishes] = React.useState(dishesJson.dishes);
 
 	const methods = useForm({
 		defaultValues: {
@@ -178,26 +189,28 @@ export default function MainSteppers() {
 	const steps = getSteps();
 
 	const handleNext = (data) => {
-		console.log(data);
-
+		console.log('DATA ::>', data);
 
 		switch (activeStep) {
 			case 0:
-				console.log('selectedMeal', selectedMeal)
+				console.log('selectedMeal ::>', selectedMeal)
 				const updatedMealDishes = selectedDishItems.filter((item) => {
 					return item.availableMeals.includes(selectedMeal)
 				});
-				console.log(updatedMealDishes)
+
+				console.log('updatedMealDishes ::>', updatedMealDishes)
 				setSelectedDishItems(updatedMealDishes);
 
 				let availableRestaurantTmp = []
 
-				for (item in updatedMealDishes) {
-					if (!availableRestaurantTmp.includes(item.restaurant)) {
-						availableRestaurantTmp.push(item.restaurant);
+				for (let item2 in updatedMealDishes) {
+					// console.log('item::>', updatedMealDishes[item2]);
+					if (!availableRestaurantTmp.includes(updatedMealDishes[item2].restaurant)) {
+						availableRestaurantTmp.push(updatedMealDishes[item2].restaurant);
 					}
 				}
-				console.log(availableRestaurantTmp);
+
+				console.log('availableRestaurantTmp ::>', availableRestaurantTmp);
 				setAvailableRestaurant(availableRestaurantTmp);
 
 				break;
@@ -206,7 +219,6 @@ export default function MainSteppers() {
 					return item.restaurant === selectedRestaurant;
 				});
 				setSelectedDishItems(updatedRestaurantDishes);
-
 				break;
 			case 2:
 			case 3:
@@ -221,21 +233,41 @@ export default function MainSteppers() {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
 	};
 
-	const handleReset = () => {
-		setActiveStep(0);
-	};
-
+	// const handleReset = () => {
+	// 	setActiveStep(0);
+	// };
 
 	const getStepContent = (step) => {
 		switch (step) {
 			case 0:
-				return <StepOneForm selectedMeal={selectedMeal} setSelectedMeal={setSelectedMeal} setSelectedPeople={setSelectedPeople} selectedPeople={selectedPeople} />;
+				return <StepOneForm
+					selectedMeal={selectedMeal}
+					setSelectedMeal={setSelectedMeal}
+					setSelectedPeople={setSelectedPeople}
+					selectedPeople={selectedPeople}
+				/>;
 			case 1:
-				return <StepTwoForm availableRestaurant={availableRestaurant} selectedRestaurant={selectedRestaurant} setSelectedRestaurant={setSelectedRestaurant} />;
+				return <StepTwoForm
+					availableRestaurant={availableRestaurant}
+					selectedRestaurant={selectedRestaurant}
+					setSelectedRestaurant={setSelectedRestaurant}
+				/>;
 			case 2:
-				return <StepThreeForm />;
+				return <StepThreeForm
+					selectedDishItems={selectedDishItems || []}
+					dish={dish}
+					setDish={setDish}
+					qty={qty}
+					setQty={setQty}
+				/>;
 			case 3:
-				return <ReviewForm />;
+				return <ReviewForm
+					selectedMeal={selectedMeal}
+					selectedPeople={selectedPeople}
+					selectedRestaurant={selectedRestaurant}
+					dish={dish}
+					qty={qty}
+				/>;
 			default:
 				return 'Unknown step';
 		}
@@ -267,40 +299,41 @@ export default function MainSteppers() {
 							<Grid container spacing={3}>
 								<Grid item xs>
 								</Grid>
-								<Grid item xs>
-									<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', }}>
+								<Grid item xs={10}>
+									<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 										{activeStep === steps.length ? (
 											<div>
 												<Typography className={classes.instructions} variant="h5" component="h2">
 													Thanks - you&apos;re Registered
 												</Typography>
-												<Button onClick={handleReset} className={classes.button}>
+												{/* <Button onClick={handleReset} className={classes.button}>
 													Book More
-												</Button>
+												</Button> */}
 											</div>
 										) : (
 
 											<>
-												<FormProvider {...methods} className={classes.buttonContainer}>
+												<FormProvider {...methods} className={classes.formContainer}>
 													<form onSubmit={methods.handleSubmit(handleNext)}>
 														{getStepContent(activeStep)}
+														<div className={classes.buttonContainer}>
+															<Button
+																className={classes.backButton}
+																disabled={activeStep === 0}
+																onClick={handleBack}
+															>
+																back
+															</Button>
 
-														<Button
-															className={classes.backButton}
-															disabled={activeStep === 0}
-															onClick={handleBack}
-														>
-															back
-														</Button>
-
-														<Button
-															className={classes.nxtButton}
-															variant="contained"
-															color="primary"
-															type="submit"
-														>
-															{activeStep === steps.length - 1 ? "Finish" : "Next"}
-														</Button>
+															<Button
+																className={classes.nxtButton}
+																variant="contained"
+																color="primary"
+																type="submit"
+															>
+																{activeStep === steps.length - 1 ? "Finish" : "Next"}
+															</Button>
+														</div>
 													</form>
 												</FormProvider>
 											</>

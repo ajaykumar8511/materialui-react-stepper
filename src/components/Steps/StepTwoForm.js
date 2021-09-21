@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import {
 	TextField,
@@ -5,7 +6,7 @@ import {
 } from '@material-ui/core';
 
 import {
-    Controller,
+	Controller,
 	useFormContext,
 	// useForm,
 	// FormProvider,
@@ -18,6 +19,7 @@ const StepTwoForm = (props) => {
 
 	const handleChange = (event) => {
 		setSelectedRestaurant(event.target.value);
+		console.log('selectedRestaurant ::>', selectedRestaurant);
 	};
 
 	return (
@@ -27,14 +29,19 @@ const StepTwoForm = (props) => {
 				name="restaurant"
 				render={({ field }) => (
 					<TextField
+						{...field}
 						id="outlined-select-restaurant"
 						select
 						label="Select Restaurant"
 						value={selectedRestaurant}
 						onChange={handleChange}
+						required='required'
+						// 	onChange={(e) => {
+						// 		field.onChange(e);
+						// 		handleChange(e);
+						//    }}
 						variant="outlined"
 						style={{ minWidth: 330, marginBottom: 20, marginTop: 30 }}
-						{...field}
 					>
 						{props.availableRestaurant.map((option) => (
 							<MenuItem key={option} value={option}>

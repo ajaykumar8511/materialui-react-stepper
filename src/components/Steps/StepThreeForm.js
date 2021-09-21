@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React from 'react';
 
 import {
@@ -13,7 +15,7 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
-	
+
 } from '@material-ui/core';
 
 import {
@@ -25,46 +27,28 @@ import {
 
 import AddIcon from '@mui/icons-material/Add';
 
-const currencies = [
-	{
-		value: 'USD',
-		label: '$',
-	},
-	{
-		value: 'EUR',
-		label: '€',
-	},
-	{
-		value: 'BTC',
-		label: '฿',
-	},
-	{
-		value: 'JPY',
-		label: '¥',
-	},
-];
-
-const StepThreeForm = () => {
+const StepThreeForm = (props) => {
 	const { control } = useFormContext();
-	const [dish, setDish] = React.useState('');
-	const [qty, setQty] = React.useState(0);
-
+	// const [dish, setDish] = React.useState('');
+	// const [qty, setQty] = React.useState(0);
+	const { selectedDishItems, dish, setDish, qty, setQty } = props;
 
 	const handleChange = (event) => {
-		// setCurrency(event.target.value);
+		setDish(event.target.value);
+		console.log('dish ::>', dish);
 	};
 
-	const getValue = () => {
-		console.log('getValue function of Dish QTy is called');
+	const getValue = (event) => {
+		// setQty(event.target.value);
+		console.log('qty ::>', qty);
 	};
 	const addDishBtnFn = () => {
-		console.log('addDishBtnFn function of Add Dish is called');
+		console.log('addDishBtnFn function of Add Dish is called',);
 	};
 
 
 	return (
 		<>
-
 			<Card>
 				<CardContent>
 					<TableContainer >
@@ -76,50 +60,43 @@ const StepThreeForm = () => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{/* {rows.map((row) => ( */}
-								<TableRow
-								// key={row.name}
-								>
+								<TableRow>
 									<TableCell component="th" scope="row">
-										{/* {row.name} */}
-										Dish 1
+										{dish}
 									</TableCell>
 									<TableCell align="right">
-										{/* {row.calories} */}
-										2
+										{qty}
 									</TableCell>
 								</TableRow>
-								{/* ))} */}
 							</TableBody>
 						</Table>
 					</TableContainer>
 				</CardContent>
 			</Card>
 			<br />
-
 			<Controller
 				control={control}
 				name="dish"
 				render={({ field }) => (
 					<TextField
+						{...field}
 						id="outlined-select-dish"
 						select
 						label="Select Dish"
 						value={dish}
 						onChange={handleChange}
 						variant="outlined"
+						required='required'
 						style={{ minWidth: 330 }}
-						{...field}
 					>
-						{currencies.map((option) => (
-							<MenuItem key={option.value} value={option.value}>
-								{option.label}
+						{selectedDishItems.map((option) => (
+							<MenuItem key={option.id} value={option.name}>
+								{option.name}
 							</MenuItem>
 						))}
 					</TextField>
 				)}
 			/>
-
 			<br />
 			<br />
 
@@ -128,10 +105,10 @@ const StepThreeForm = () => {
 				name="dishqty"
 				render={({ field }) => (
 					<ButtonGroup
+						{...field}
 						size="small"
 						aria-label="Dish Quantity"
 						onClick={getValue()}
-						{...field}
 					>
 						<Button id="IncreaseQtyBtn" onClick={() => (qty !== 0) ? setQty(qty - 1) : null}>-</Button>
 						<Button id="DisplayQtyBtn">{qty}</Button>
@@ -145,12 +122,12 @@ const StepThreeForm = () => {
 				name="adddish"
 				render={({ field }) => (
 					<Button
+						{...field}
 						id="addDishBtn"
 						variant="outlined"
 						style={{ marginLeft: 90 }}
 						startIcon={<AddIcon />}
-						{...field}
-						onClick={()=> addDishBtnFn()}
+						onClick={() => addDishBtnFn()}
 					>
 						Add Dish
 					</Button>
