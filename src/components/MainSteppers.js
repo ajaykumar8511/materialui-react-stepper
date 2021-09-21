@@ -303,9 +303,9 @@ export default function MainSteppers() {
 							</Stepper>
 
 							<Grid container spacing={3}>
-								<Grid item xs>
+								<Grid item lg={2} xs={1}>
 								</Grid>
-								<Grid item xs={10}>
+								<Grid item lg={8} xs={10}>
 									<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 										{activeStep === steps.length ? (
 											<div>
@@ -346,7 +346,7 @@ export default function MainSteppers() {
 										)}
 									</div>
 								</Grid>
-								<Grid item xs>
+								<Grid item lg={2} xs={1}>
 								</Grid>
 							</Grid>
 						</CardContent>

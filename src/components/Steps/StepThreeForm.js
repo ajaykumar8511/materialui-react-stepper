@@ -26,6 +26,8 @@ import {
 
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 const StepThreeForm = (props) => {
 	const { control } = useFormContext();
@@ -51,10 +53,10 @@ const StepThreeForm = (props) => {
 
 		if (Index !== -1) {
 			let tempArray = [...orderItems];
-			console.log('Index ::>',Index)
+			console.log('Index ::>', Index)
 
-			if(tempArray.length){
-				console.log('tempArray ::>',tempArray)
+			if (tempArray.length) {
+				console.log('tempArray ::>', tempArray)
 				tempArray[Index].dishQty = tempArray[Index].dishQty + qty;
 				setOrderItems([...tempArray])
 			}
@@ -63,7 +65,7 @@ const StepThreeForm = (props) => {
 		else {
 			setOrderItems([...orderItems, { id: selectedItem[0].id, dishName: selectedItem[0].name, dishQty: qty }])
 		}
-		
+
 	};
 	const deleteOrderItem = (id) => {
 		// console.log('addDishBtnFn function of Add Dish is called',);
@@ -101,13 +103,23 @@ const StepThreeForm = (props) => {
 												{item.dishQty}
 											</TableCell>
 											<TableCell align="right">
-												<Button
+												{/* <Button
 													variant="outlined"
 													startIcon={<DeleteIcon />}
 													onClick={() => deleteOrderItem(item.id)}
 												>
 													Delete
-												</Button>
+												</Button> */}
+
+												<IconButton
+													color="primary"
+													onClick={() => deleteOrderItem(item.id)}
+													aria-label="remove dish"
+													component="span"
+												>
+													<DeleteIcon />
+												</IconButton>
+
 											</TableCell>
 										</TableRow>
 									);
