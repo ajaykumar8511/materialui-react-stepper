@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-undef */
 import React from 'react';
@@ -9,6 +10,7 @@ import StepOneForm from './Steps/StepOneForm.js';
 import StepTwoForm from './Steps/StepTwoForm.js';
 import StepThreeForm from './Steps/StepThreeForm.js';
 import ReviewForm from './Steps/ReviewForm.js';
+
 
 import {
 	Stepper,
@@ -32,8 +34,6 @@ import RestaurantIcon from '@material-ui/icons/Restaurant';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
-
-
 const dishesJson = require('../dishes.json');
 
 const ColorlibConnector = withStyles({
@@ -42,14 +42,16 @@ const ColorlibConnector = withStyles({
 	},
 	active: {
 		'& $line': {
-			backgroundImage:
-				'linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%)',
+			backgroundImage: 'linear-gradient(90deg, rgba(0,168,138,1) 0%, rgba(0,176,144,1) 49%, rgba(0,224,182,1) 100%)',			
+			// backgroundImage:
+			// 	'linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%)',
 		},
 	},
 	completed: {
 		'& $line': {
-			backgroundImage:
-				'linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%)',
+			backgroundImage: 'linear-gradient(90deg, rgba(0,168,138,1) 0%, rgba(0,176,144,1) 49%, rgba(0,224,182,1) 100%)',	
+			// backgroundImage:
+			// 	'linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%)',
 		},
 	},
 	line: {
@@ -73,13 +75,15 @@ const useColorlibStepIconStyles = makeStyles({
 		alignItems: 'center',
 	},
 	active: {
-		backgroundImage:
-			'linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%)',
+		backgroundImage: 'linear-gradient(90deg, rgba(0,168,138,1) 0%, rgba(0,176,144,1) 49%, rgba(0,224,182,1) 100%)',	
+		// backgroundImage:
+		// 	'linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%)',
 		boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
 	},
 	completed: {
-		backgroundImage:
-			'linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%)',
+		backgroundImage: 'linear-gradient(90deg, rgba(0,168,138,1) 0%, rgba(0,176,144,1) 49%, rgba(0,224,182,1) 100%)',	
+		// backgroundImage:
+		// 	'linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%)',
 	},
 });
 
@@ -126,7 +130,35 @@ const useStyles = makeStyles((theme) => ({
 		width: '100%',
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+
+		// "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+		// 	borderColor: "green"
+		// },
+		// "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+		// 	borderColor: "red"
+		// },
+		"& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+			borderColor: " rgba(0,176,144,1)"
+		},
+		// "& .MuiOutlinedInput-input": {
+		// 	color: "green"
+		// },
+		// "&:hover .MuiOutlinedInput-input": {
+		// 	color: "red"
+		// },
+		// "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+		// 	color: "purple"
+		// },
+		// "& .MuiInputLabel-outlined": {
+		// 	color: " rgba(0,164,134)"
+		// },
+		// "&:hover .MuiInputLabel-outlined": {
+		// 	color: "red"
+		// },
+		// "& .MuiInputLabel-outlined.Mui-focused": {
+		// 	color: "purple"
+		// }
 	},
 
 	formContainer: {
@@ -135,30 +167,42 @@ const useStyles = makeStyles((theme) => ({
 	},
 	buttonContainer: {
 		display: 'flex',
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
+		fontWeight: 400,
 	},
 	button: {
 		marginRight: theme.spacing(1),
 	},
 	nxtButton: {
-		backgroundImage: 'linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%)',
+		// backgroundImage: 'linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%)',
+		backgroundImage: 'linear-gradient(90deg, rgba(0,168,138,1) 0%, rgba(0,176,144,1) 49%, rgba(0,224,182,1) 100%)',	
 	},
 	backButton: {
-		backgroundImage: 'linear-gradient(90deg, #A8C0FF 0%, #3F2B96 100%)',
-		color: '#FFFFFF'
+		"&:hover": {
+			backgroundImage: 'linear-gradient(90deg, rgba(0,168,138,1) 0%, rgba(0,176,144,1) 49%, rgba(0,224,182,1) 100%)',	
+			color: '#FFFFFF',
+
+		}
 	},
 
-	instructions: {
-		marginTop: theme.spacing(1),
-		marginBottom: theme.spacing(1),
+	instructions1: {
+		marginTop: theme.spacing(5),
 	},
+	instructions2: {
+		marginBottom: theme.spacing(9),
+	},
+	stepLabel: {
+		fontWeight: 900,
 
+	},
 
 }));
 
 
+
+
 function getSteps() {
-	return ['Select Meal & Peoples', 'Restro', 'Select Servings', 'Review'];
+	return ['Meal & Peoples', 'Restro', 'Servings', 'Review'];
 }
 
 export default function MainSteppers() {
@@ -169,7 +213,8 @@ export default function MainSteppers() {
 	const [availableRestaurant, setAvailableRestaurant] = React.useState([]);
 	const [selectedRestaurant, setSelectedRestaurant] = React.useState('');
 	const [activeStep, setActiveStep] = React.useState(0);
-	const [selectedDishItems, setSelectedDishItems] = React.useState(dishesJson.dishes);
+	const [selectedDishItemsByMeal, setSelectedDishItemsByMeal] = React.useState(dishesJson.dishes);
+	const [selectedDishItemsByRestaurant, setSelectedDishItemsByRestaurant] = React.useState(dishesJson.dishes);
 	const [dish, setDish] = React.useState('');
 	const [qty, setQty] = React.useState(1);
 	const [orderItems, setOrderItems] = React.useState([]);
@@ -185,19 +230,18 @@ export default function MainSteppers() {
 
 
 	const steps = getSteps();
-
 	const handleNext = (data) => {
 		console.log('DATA ::>', data);
 
 		switch (activeStep) {
 			case 0:
 				console.log('selectedMeal ::>', selectedMeal)
-				const updatedMealDishes = selectedDishItems.filter((item) => {
-					return item.availableMeals.includes(selectedMeal)
+				const updatedMealDishes = dishesJson.dishes.filter((item) => {
+					return item.availableMeals.includes(selectedMeal);
 				});
 
 				console.log('updatedMealDishes ::>', updatedMealDishes)
-				setSelectedDishItems(updatedMealDishes);
+				setSelectedDishItemsByMeal(updatedMealDishes);
 
 				let availableRestaurantTmp = []
 
@@ -210,14 +254,20 @@ export default function MainSteppers() {
 				console.log('availableRestaurantTmp ::>', availableRestaurantTmp);
 				setAvailableRestaurant(availableRestaurantTmp);
 				setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+				
+
 				break;
+
 			case 1:
-				const updatedRestaurantDishes = selectedDishItems.filter((item) => {
+				const updatedRestaurantDishes = selectedDishItemsByMeal.filter((item) => {
 					return item.restaurant === selectedRestaurant;
 				});
-				setSelectedDishItems(updatedRestaurantDishes);
+				setSelectedDishItemsByRestaurant(updatedRestaurantDishes);
 				setActiveStep((prevActiveStep) => prevActiveStep + 1);
+				setOrderItems([]);
 				break;
+
 			case 2:
 				if (orderItems.length) {
 					setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -225,15 +275,17 @@ export default function MainSteppers() {
 					alert('Please Fill at least One Item')
 				}
 				break;
+
 			case 3:
+				setActiveStep((prevActiveStep) => prevActiveStep + 1);
+				break;
 			default:
 		}
-
-
 	};
 
 	const handleBack = () => {
 		setActiveStep((prevActiveStep) => prevActiveStep - 1);
+
 	};
 
 	// const handleReset = () => {
@@ -256,9 +308,8 @@ export default function MainSteppers() {
 					setSelectedRestaurant={setSelectedRestaurant}
 				/>;
 			case 2:
-
 				return <StepThreeForm
-					selectedDishItems={selectedDishItems || []}
+					selectedDishItems={selectedDishItemsByRestaurant || []}
 					orderItems={orderItems || []}
 					setOrderItems={setOrderItems}
 					dish={dish}
@@ -282,7 +333,6 @@ export default function MainSteppers() {
 
 	return (
 		<div className={classes.root}>
-
 			<Grid container spacing={3}>
 				<Grid item xs>
 				</Grid>
@@ -295,29 +345,33 @@ export default function MainSteppers() {
 									const stepProps = {};
 
 									return (
-										<Step {...stepProps} key={index}>
-											<StepLabel StepIconComponent={ColorlibStepIcon} {...labelProps}>{step}</StepLabel>
+										<Step {...stepProps} key={index} >
+											<StepLabel
+												StepIconComponent={ColorlibStepIcon}
+												{...labelProps}
+												className={classes.stepLabel}
+											>
+												<b>{step}</b>
+											</StepLabel>
 										</Step>
 									);
 								})}
 							</Stepper>
-
 							<Grid container spacing={3}>
-								<Grid item lg={2} xs={1}>
-								</Grid>
-								<Grid item lg={8} xs={10}>
+								
+								<Grid item lg={12} xs={12}>
 									<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 										{activeStep === steps.length ? (
-											<div>
-												<Typography className={classes.instructions} variant="h5" component="h2">
-													Thanks - you&apos;re order registered !
+											<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+												<Typography variant="h1" component="h1" className={classes.instructions1}>
+													Thanks !
 												</Typography>
-												{/* <Button onClick={handleReset} className={classes.button}>
-													Book More
-												</Button> */}
+												<Typography color="textSecondary" className={classes.instructions2} >
+													{/* you&apos;re order registered */}
+													Your order registered
+												</Typography>
 											</div>
 										) : (
-
 											<>
 												<FormProvider {...methods} className={classes.formContainer}>
 													<form onSubmit={methods.handleSubmit(handleNext)}>
@@ -330,7 +384,6 @@ export default function MainSteppers() {
 															>
 																back
 															</Button>
-
 															<Button
 																className={classes.nxtButton}
 																variant="contained"
@@ -346,8 +399,7 @@ export default function MainSteppers() {
 										)}
 									</div>
 								</Grid>
-								<Grid item lg={2} xs={1}>
-								</Grid>
+								
 							</Grid>
 						</CardContent>
 					</Card>

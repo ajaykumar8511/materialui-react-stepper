@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-
+import { makeStyles } from '@material-ui/core/styles';
 import {
 	Button,
 	Card,
@@ -25,13 +25,33 @@ import {
 } from "react-hook-form";
 
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import RemoveRoundedIcon from '@material-ui/icons/RemoveRounded';
+
+const useStyles = makeStyles((theme) => ({
+	hoverButtonStyle: {
+		"&:hover": {
+			backgroundImage: 'linear-gradient(90deg, rgba(0,168,138,1) 0%, rgba(0,176,144,1) 49%, rgba(0,224,182,1) 100%)',
+			color: 'white',
+		}
+	},
+	icon: {
+		"&:hover": {
+			// background: 'linear-gradient(to right, #ff1c3b 0%, #f44949 50%, #ff7a7c 100%)',
+			// color: '#ff1c3c',
+			color: '#000',
+
+		},
+	},
+}))
 
 const StepThreeForm = (props) => {
+	const classes = useStyles();
 	const { control } = useFormContext();
-	const [dishIds, setDishIds] = useState([]);
 	const { selectedDishItems, dish, setDish, qty, setQty, orderItems, setOrderItems } = props;
 
 	const handleChange = (event) => {
@@ -39,11 +59,9 @@ const StepThreeForm = (props) => {
 		console.log('dish ::>', dish);
 	};
 
-	// const addDishBtnFn = () => {
-	// 	console.log('addDishBtnFn function of Add Dish is called',);
-	// };
 
 	const addOrderItem = () => {
+		setQty(1);
 		const selectedItem = selectedDishItems.filter((item) => {
 			return item.id === dish;
 		});
@@ -74,8 +92,6 @@ const StepThreeForm = (props) => {
 		});
 
 		setOrderItems([...availableOrderItems]);
-
-
 	};
 
 	return (
@@ -86,9 +102,9 @@ const StepThreeForm = (props) => {
 						<Table >
 							<TableHead>
 								<TableRow>
-									<TableCell>Dish</TableCell>
-									<TableCell align="right">Quantity</TableCell>
-									<TableCell align="center">Action</TableCell>
+									<TableCell><b>Dish</b></TableCell>
+									<TableCell align="right"><b>Quantity</b></TableCell>
+									<TableCell align="center"><b>Action</b></TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
@@ -103,23 +119,14 @@ const StepThreeForm = (props) => {
 												{item.dishQty}
 											</TableCell>
 											<TableCell align="right">
-												{/* <Button
-													variant="outlined"
-													startIcon={<DeleteIcon />}
-													onClick={() => deleteOrderItem(item.id)}
-												>
-													Delete
-												</Button> */}
-
 												<IconButton
-													color="primary"
+													// color="primary"
 													onClick={() => deleteOrderItem(item.id)}
 													aria-label="remove dish"
 													component="span"
 												>
-													<DeleteIcon />
+													<ClearOutlinedIcon style={{fontSize:'16px'}} className={classes.icon} />
 												</IconButton>
-
 											</TableCell>
 										</TableRow>
 									);
@@ -146,7 +153,6 @@ const StepThreeForm = (props) => {
 						style={{ minWidth: 330 }}
 					>
 						{selectedDishItems.map((option) => {
-
 							return (
 								<MenuItem key={option.id} value={option.id}>
 									{option.name}
@@ -168,10 +174,24 @@ const StepThreeForm = (props) => {
 						{...field}
 						size="small"
 						aria-label="Dish Quantity"
+						style={{ marginTop: '10px' }}
 					>
-						<Button id="IncreaseQtyBtn" onClick={() => (qty !== 1) ? setQty(qty - 1) : null}>-</Button>
-						<Button id="DisplayQtyBtn">{qty}</Button>
-						<Button id="DecreaseQtyBtn" onClick={() => setQty(qty + 1)}>+</Button>
+						<Button
+							id="DecreaseQtyBtn"
+							className={classes.hoverButtonStyle}
+							onClick={() => (qty !== 1) ? setQty(qty - 1) : null}
+							style={{ padding: '2px' }}
+						>
+							<RemoveRoundedIcon style={{ fontSize: '17px' }} />
+						</Button>
+						<Button id="DisplayQtyBtn"><b>{qty}</b></Button>
+						<Button
+							id="IncreaseQtyBtn"
+							className={classes.hoverButtonStyle}
+							onClick={() => setQty(qty + 1)}
+						>
+							<AddIcon style={{ fontSize: '17px' }} />
+						</Button>
 					</ButtonGroup>
 				)}
 			/>
@@ -187,6 +207,7 @@ const StepThreeForm = (props) => {
 						style={{ marginLeft: 90 }}
 						startIcon={<AddIcon />}
 						onClick={() => addOrderItem()}
+						className={classes.hoverButtonStyle}
 					>
 						Add Dish
 					</Button>

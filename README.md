@@ -1,70 +1,97 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br />
+<p align="center">
+  <a href="">
+    <img src="img\MUI_logo.png" alt="Logo" width="100px" \>
+  </a>
+  
+  <h3 align="center"> 🍝 <b> Restro Stepper </b> </h3>
 
-## Available Scripts
+  <p align="center">
+    The React Project    
+  </p>
+<br/>
+<br/>
 
-In the project directory, you can run:
 
-### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🚀 How to use
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Install packages with `yarn` or `npm install`.
+- Run `yarn start` to start the bundler.
 
-### `yarn test`
+<br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🎯 What is *Stepper*
 
-### `yarn build`
+- Steppers convey progress through numbered steps.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Steppers display progress through a sequence of logical and numbered steps. They may also be used for navigation. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Steppers may display a transient feedback message after a step is saved.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Steppers display progress through a sequence by breaking it up into multiple logical and numbered steps.
+ 
 
-### `yarn eject`
+&nbsp;
+## 💻 About
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This Project  is used for register **Meal Plan** . User have to select Type of Meal, Restaurant, Dishes then they get the Review at last step. App have **Nice UI**, also It is Easy to use. 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+&nbsp;
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- In ***First step*** user will select type of Meal and People. 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+<p align="center">
+    <img src="img\Stepper_step1.gif" alt="step1_gif" width="700px" >
+</p>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+&nbsp;
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- In ***Second step*** user will select the Restaurant. 
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+<p align="center">
+    <img src="img\Stepper_step2.gif" alt="step2_gif" width="700px" >
+</p>
+&nbsp;
 
-### Analyzing the Bundle Size
+- In ***Third step*** user will select the Dishes.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<p align="center">
+    <img src="img\Stepper_step3.gif" alt="step3_gif" width="700px" >
+</p>
 
-### Making a Progressive Web App
+&nbsp;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- In ***Fourth step*** user will get the Review of selections. 
 
-### Advanced Configuration
+<p align="center">
+    <img src="img\Stepper_step4.gif" alt="step4_gif" width="700px" >
+</p>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+&nbsp;
 
-### Deployment
+- After ***Step Completion*** user Thank you message will be displayed. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+<p align="center">
+    <img src="img\Stepper_step5.gif" alt="step5_gif" width="700px" >
+</p>
 
-### `yarn build` fails to minify
+<br/>
+<br/>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Built With
+
+<br/>
+
+* <img align="left" alt="ReactNative" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react/react.png" />&nbsp;  **React**
+
+<br/>
+
+* <img align="left" alt="Async Storage" width="26px" src="img/MUI_logo.png" />&nbsp;  **Material UI**
+
+ 
+
+
